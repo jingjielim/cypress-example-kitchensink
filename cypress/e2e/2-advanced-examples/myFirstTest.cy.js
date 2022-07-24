@@ -1,9 +1,9 @@
-const navbarText = Cypress.env('navbarText')
+// const navbarText = Cypress.env('navbarText')
 
 context('My First Test', () => {
-  beforeEach(() => {
-    cy.visit('/')
-  })
+  // beforeEach(() => {
+  //   cy.visit('/')
+  // })
 
   // it('has an h1 on the page', () => {
   //   cy.get('h1').should('exist')
@@ -25,7 +25,25 @@ context('My First Test', () => {
   //       cy.get('p').should('exist')
   //     })
   // })
-  it('correctly renders the cypress website link', () => {
-    cy.findByText(navbarText).should('exist')
+
+  // it('correctly renders the cypress website link', () => {
+  //   cy.findByText(navbarText).should('exist')
+  // })
+
+  it('types into an email field', () => {
+    cy.visit('/commands/actions')
+    cy.findByPlaceholderText('Email').type('test@email.com')
+    cy.wait(2000).then(() => {
+      // eslint-disable-next-line no-console
+      console.log('Test is finished')
+      fetch('https://api.spacexdata.com/v3/missions')
+        .then((res) => res.json())
+        .then((data) => {
+          // eslint-disable-next-line no-console
+          console.log(data)
+        })
+    })
+
+    cy.log('cypress log used')
   })
 })
