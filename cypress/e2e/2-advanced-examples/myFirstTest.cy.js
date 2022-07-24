@@ -30,20 +30,35 @@ context('My First Test', () => {
   //   cy.findByText(navbarText).should('exist')
   // })
 
-  it('types into an email field', () => {
-    cy.visit('/commands/actions')
-    cy.findByPlaceholderText('Email').type('test@email.com')
-    cy.wait(2000).then(() => {
-      // eslint-disable-next-line no-console
-      console.log('Test is finished')
-      fetch('https://api.spacexdata.com/v3/missions')
-        .then((res) => res.json())
-        .then((data) => {
-          // eslint-disable-next-line no-console
-          console.log(data)
-        })
-    })
+  // it('types into an email field', () => {
+  //   cy.visit('/commands/actions')
+  //   cy.findByPlaceholderText('Email').type('test@email.com')
+  //   cy.wait(2000).then(() => {
+  //     // eslint-disable-next-line no-console
+  //     console.log('Test is finished')
+  //     fetch('https://api.spacexdata.com/v3/missions')
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         // eslint-disable-next-line no-console
+  //         console.log(data)
+  //       })
+  //   })
 
-    cy.log('cypress log used')
+  //   cy.log('cypress log used')
+  // })
+
+  it('shows an active class for the current page', () => {
+    cy.visit('/commands/actions')
+    cy.get('.dropdown-menu').find('li').eq(2).should('have.class', 'active')
+  })
+
+  it('should not have an active class on inactive pages', () => {
+    cy.visit('/commands/actions')
+    cy.get('.dropdown-menu')
+      .find('li')
+      .first()
+      .should('not.have.class', 'active')
+      .find('a')
+      .should('have.attr', 'href', '/commands/querying')
   })
 })
