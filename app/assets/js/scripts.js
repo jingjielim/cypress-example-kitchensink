@@ -12,7 +12,10 @@ $(() => {
 
   let context
 
-  context = typeof canvas !== 'undefined' && canvas !== null ? canvas.getContext('2d') : 0
+  context =
+    typeof canvas !== 'undefined' && canvas !== null
+      ? canvas.getContext('2d')
+      : 0
 
   $('#action-canvas').on('click', (e) => {
     draw(e)
@@ -45,6 +48,10 @@ $(() => {
     $(e.currentTarget).addClass('hidden')
   })
 
+  $('.dropdown-toggle').on('mouseover', () => {
+    $('li.active').addClass('open')
+  })
+
   // listen to contextmenu to demonstrate logic on right click command
   $('.rightclick-action-div').on('contextmenu', (e) => {
     $('.rightclick-action-input-hidden').removeClass('hidden').focus()
@@ -68,8 +75,8 @@ $(() => {
     e.preventDefault()
 
     $('<p>Your form has been submitted!</p>')
-    .insertAfter(e.currentTarget)
-    .css('color', '#20B520')
+      .insertAfter(e.currentTarget)
+      .css('color', '#20B520')
   })
 
   // hide this div so we can invoke show later
