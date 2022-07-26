@@ -1,4 +1,5 @@
 // const navbarText = Cypress.env('navbarText')
+const token = 'abcd123'
 
 context('My First Test', () => {
   beforeEach(() => {
@@ -8,27 +9,40 @@ context('My First Test', () => {
     })
   })
 
-  it('uses fixture data in a network request', function () {
-    cy.visit('/commands/network-requests')
-    cy.intercept('GET', '**/comments/*', this.data).as('getComment')
-    cy.get('.network-btn').click()
-    cy.wait('@getComment').then((res) => {
-      cy.log('Response: ', res)
+  it('sets and gets a token in local storage', () => {
+    cy.setLocalStorage('token', token)
+    cy.getLocalStorage('token').should('eq', token)
+  })
+
+  it('overwrites the type command by using sensitive characters', () => {
+    cy.visit('/commands/actions')
+    cy.findByPlaceholderText('Email').type('test@email.com')
+    cy.findByPlaceholderText('Email').type('test@email.com', {
+      sensitive: true,
     })
   })
 
-  it('pulls data from a fixture', () => {
-    cy.fixture('example').then((data) => {
-      cy.log('DATA: ', data)
-    })
-  })
+  // it('uses fixture data in a network request', function () {
+  //   cy.visit('/commands/network-requests')
+  //   cy.intercept('GET', '**/comments/*', this.data).as('getComment')
+  //   cy.get('.network-btn').click()
+  //   cy.wait('@getComment').then((res) => {
+  //     cy.log('Response: ', res)
+  //   })
+  // })
 
-  it('updates fixture data inline', () => {
-    cy.fixture('example').then((data) => {
-      data.email = 'updated@mail.com'
-      cy.log('UPDATED: ', data)
-    })
-  })
+  // it('pulls data from a fixture', () => {
+  //   cy.fixture('example').then((data) => {
+  //     cy.log('DATA: ', data)
+  //   })
+  // })
+
+  // it('updates fixture data inline', () => {
+  //   cy.fixture('example').then((data) => {
+  //     data.email = 'updated@mail.com'
+  //     cy.log('UPDATED: ', data)
+  //   })
+  // })
   // before(() => {
   //   cy.request('https://api.spacexdata.com/v3/missions')
   //     .its('body')
